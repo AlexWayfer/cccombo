@@ -1,0 +1,29 @@
+env:
+  browser: true
+extends: 'eslint:recommended'
+rules:
+  indent:
+    - error
+    - tab
+    - SwitchCase: 1
+  no-mixed-spaces-and-tabs:
+    - error
+    - smart-tabs
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - warn
+    - single
+    - avoidEscape: true
+  semi:
+    - error
+    - always
+  no-unused-vars:
+    - warn
+    - argsIgnorePattern: '^event$'
+  no-console:
+    - warn
+    - allow:
+      - error
+      - warn
