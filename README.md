@@ -14,8 +14,8 @@ and include in your application.
 ```javascript
 var cccomboArray = document.getElementsByClassName('cccombo');
 [].forEach.call(cccomboArray, function(element) {
-	var cccombo = new Cccombo(element);
-	cccombo.init();
+  var cccombo = new Cccombo(element);
+  cccombo.init();
 });
 ```
 
@@ -23,12 +23,12 @@ var cccomboArray = document.getElementsByClassName('cccombo');
 
 ```html
 <div class="cccombo">
-	<button type="button"></button>
-	<ul>
-		<li>The first option</li>
-		<li>The second option</li>
-		<li>The third option</li>
-	</ul>
+  <button type="button"></button>
+  <ul>
+    <li>The first option</li>
+    <li>The second option</li>
+    <li>The third option</li>
+  </ul>
 </div>
 ```
 
@@ -36,12 +36,12 @@ var cccomboArray = document.getElementsByClassName('cccombo');
 
 ```html
 <div class="cccombo">
-	<input type="text" />
-	<ul>
-		<li>The first option</li>
-		<li>The second option</li>
-		<li>The third option</li>
-	</ul>
+  <input type="text" />
+  <ul>
+    <li>The first option</li>
+    <li>The second option</li>
+    <li>The third option</li>
+  </ul>
 </div>
 ```
 
@@ -51,7 +51,7 @@ Just add `data-label` attribute to the target element inside `<button>`.
 
 ```html
 <button type="button">
-	<span data-label></span>
+  <span data-label></span>
 </button>
 ```
 
@@ -69,9 +69,9 @@ Just add `data-value` attribute to `<li>` elements.
 
 ```javascript
 cccombo.list.filterItems(function(item, index) {
-	return (
-		item.element.dataset.foo > 0 &&
-			item.element.dataset.bar == 'baz'
-	);
+  return (
+    item.element.dataset.foo > 0 &&
+      item.element.dataset.bar == 'baz'
+  );
 });
 ```
