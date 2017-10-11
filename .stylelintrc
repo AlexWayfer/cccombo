@@ -1,0 +1,30 @@
+{
+  "rules": {
+    "indentation": ["tab"],
+    "function-comma-space-after": "always",
+    "rule-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"]
+      }
+    ],
+    "declaration-block-semicolon-newline-after": "always",
+    "declaration-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment", "after-declaration"]
+      }
+    ],
+    "block-closing-brace-empty-line-before": "never",
+    "at-rule-semicolon-newline-after": "always",
+    "color-hex-case": "lower",
+    "selector-list-comma-newline-after": "always",
+    "declaration-block-trailing-semicolon": "always",
+    "shorthand-property-no-redundant-values": true,
+    "selector-max-empty-lines": 0,
+    "function-max-empty-lines": 0,
+    "max-empty-lines": 1,
+    "number-leading-zero": "always"
+  }
+}
