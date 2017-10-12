@@ -1,12 +1,12 @@
 /*
 	Cccombo
-	
+
 	Make select-box or combo-box by one module!
-	
+
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.0.0
-	
+	Version: 1.0.1
+
 	https://github.com/AlexWayfer/cccombo
 */
 

@@ -7,7 +7,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.0.0
+	Version: 1.0.1
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -22,7 +22,6 @@
 	position: relative;
 	z-index: 2;
 	overflow: hidden;
-	margin-right: 20px;
 
 	/* https://bugzilla.mozilla.org/show_bug.cgi?id=488725 */
 	white-space: normal;
