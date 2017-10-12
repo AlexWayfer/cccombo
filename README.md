@@ -55,6 +55,16 @@ Just add `data-label` attribute to the target element inside `<button>`.
 </button>
 ```
 
+### Insert the custom label of the selected item
+
+Just add `data-label` attribute to the `li` element:
+
+```html
+<li data-label="The first">
+  The first option
+</li>
+```
+
 ### Define custom values for items
 
 Just add `data-value` attribute to `<li>` elements.
