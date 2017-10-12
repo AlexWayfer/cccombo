@@ -45,7 +45,7 @@ var cccomboArray = document.getElementsByClassName('cccombo');
 </div>
 ```
 
-### Inserting value into custom element
+### Insert the label (HTML-content) of the selected item into the custom element
 
 Just add `data-label` attribute to the target element inside `<button>`.
 
