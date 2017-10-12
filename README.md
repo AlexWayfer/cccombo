@@ -65,6 +65,15 @@ Just add `data-label` attribute to the `li` element:
 </li>
 ```
 
+Or to its child element with the necessary label-content
+(helpful for custom HTML-labels):
+
+```html
+<li>
+  <span data-label><img src="icon.png" /></span> The second option
+</li>
+```
+
 ### Define custom values for items
 
 Just add `data-value` attribute to `<li>` elements.

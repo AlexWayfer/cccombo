@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.0.1
+	Version: 1.1.0
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -29,7 +29,10 @@ function dispatchCustomEvent(element, event_name) {
 function CccomboItem(element) {
 	// Constructor
 	this.element = element;
-	this._fromDataWithDefault('label');
+	this._fromDataWithDefault(
+		'label',
+		(this.element.querySelector('*[data-label]') || this.element).innerHTML
+	);
 	this._fromDataWithDefault('value');
 }
 
