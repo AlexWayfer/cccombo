@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.1.0
+	Version: 1.2.0
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -43,7 +43,7 @@ CccomboItem.prototype = {
 
 	_fromDataWithDefault: function(key, defaultValue) {
 		if (defaultValue === undefined) defaultValue = this.element.innerHTML;
-		var dataValue = this.element.dataset[key];
+		var dataValue = this.element.getAttribute('data-' + key);
 		return (
 			this[key] = (dataValue !== undefined) ? dataValue : defaultValue
 		);
