@@ -12,6 +12,11 @@ rules:
   linebreak-style:
     - error
     - unix
+  max-len:
+    - warn
+    - code: 80
+      tabWidth: 2
+      ignoreUrls: true
   quotes:
     - warn
     - single
@@ -19,6 +24,19 @@ rules:
   semi:
     - error
     - always
+  space-before-blocks:
+    - warn
+    - always
+  block-spacing:
+    - warn
+    - always
+  key-spacing:
+    - warn
+  object-curly-spacing:
+    - warn
+    - always
+  space-infix-ops:
+    - warn
   no-unused-vars:
     - warn
     - argsIgnorePattern: '^event$'
