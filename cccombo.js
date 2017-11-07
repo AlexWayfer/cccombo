@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.2.0
+	Version: 1.2.1
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -45,7 +45,7 @@ CccomboItem.prototype = {
 		if (defaultValue === undefined) defaultValue = this.element.innerHTML;
 		var dataValue = this.element.getAttribute('data-' + key);
 		return (
-			this[key] = (dataValue !== undefined) ? dataValue : defaultValue
+			this[key] = (dataValue !== null) ? dataValue : defaultValue
 		);
 	},
 
