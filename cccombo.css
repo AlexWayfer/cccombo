@@ -19,9 +19,15 @@
 	white-space: normal;
 }
 
+.cccombo > button {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .cccombo > button::after {
 	content: '▼';
-	float: right;
+	align-self: center;
 }
 
 .cccombo > ul {
