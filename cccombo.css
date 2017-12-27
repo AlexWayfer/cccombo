@@ -30,6 +30,10 @@
 	align-self: center;
 }
 
+.cccombo > button[disabled]::after {
+	display: none;
+}
+
 .cccombo > ul {
 	display: none;
 	position: absolute;
