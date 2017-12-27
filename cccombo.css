@@ -19,15 +19,9 @@
 	white-space: normal;
 }
 
-.cccombo > button::after,
-.cccombo > button + ul > li::after {
+.cccombo > button::after {
 	content: '▼';
 	float: right;
-}
-
-.cccombo > button + ul > li::after {
-	float: none;
-	visibility: hidden;
 }
 
 .cccombo > ul {
