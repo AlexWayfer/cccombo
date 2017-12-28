@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.3.1
+	Version: 1.3.2
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -262,7 +262,7 @@ Cccombo.prototype = {
 				return (item_value.indexOf(input_value) >= 0);
 			});
 			var selectedItem = cccombo.list.selectedItem();
-			if (selectedItem && selectedItem.value != input_value) {
+			if (selectedItem && selectedItem.value != this.value) {
 				selectedItem._unselect();
 			}
 		});
