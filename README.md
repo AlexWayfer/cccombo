@@ -9,16 +9,6 @@ and include in your application.
 
 ## Usage
 
-### Main (and common) script
-
-```javascript
-var cccomboArray = document.getElementsByClassName('cccombo');
-[].forEach.call(cccomboArray, function(element) {
-  var cccombo = new Cccombo(element);
-  cccombo.init();
-});
-```
-
 ### Select-box
 
 ```html
