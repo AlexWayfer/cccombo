@@ -189,7 +189,8 @@ CccomboList.prototype = {
 function Cccombo(element) {
 	// Constructor
 	this.element = element;
-	this.input = this.element.querySelector('input:not([type="hidden"])');
+	this.input =
+		this.element.querySelector('.cccombo > input:not([type="hidden"])');
 	this.button = this.element.querySelector('button');
 	this.input_or_button = (this.input || this.button);
 	this.list = new CccomboList(this);
