@@ -91,7 +91,7 @@ function CccomboList(cccombo) {
 	// Constructor
 	this.cccombo = cccombo;
 	this.element = this.cccombo.element.getElementsByTagName('ul')[0];
-	var liArray = this.element.querySelectorAll('li:not(.group)');
+	var liArray = this.element.querySelectorAll('li:not(.group):not([disabled])');
 	this.items = [].map.call(liArray, function(item) {
 		return new CccomboItem(item);
 	});
