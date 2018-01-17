@@ -74,6 +74,23 @@ Just add `data-value` attribute to `<li>` elements.
 <li data-value="3">The third option</li>
 ```
 
+### Group items
+
+Add `group` class to group-header elements.
+Group-header items become unselectable.
+
+```html
+<ul>
+  <li class="group">The first group</li>
+  <li>The first option</li>
+  <li>The second option</li>
+  <li>The third option</li>
+  <li class="group">The second group</li>
+  <li>Another option</li>
+  <li>One more option</li>
+</ul>
+```
+
 ### Filter the list of items
 
 ```javascript
