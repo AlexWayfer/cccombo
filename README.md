@@ -2,7 +2,7 @@
 
 Make select-box or combo-box by one module!
 
-## Install
+## Installation
 
 Just download `cccombo.js` and `cccombo.css` files
 and include in your application.
@@ -101,3 +101,11 @@ cccombo.list.filterItems(function(item, index) {
   );
 });
 ```
+
+### Listen a change event
+
+`change` event is dispatched to a `button` or `input` element,
+depends on the type of Cccombo usage.
+
+Please note, that `change` event is not dispatched to the hidden `input`,
+added by Cccombo for `button` type of usage.
