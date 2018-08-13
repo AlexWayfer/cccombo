@@ -398,7 +398,7 @@ Cccombo.prototype = {
 document.addEventListener('DOMContentLoaded', function() {
 	var cccomboArray = document.getElementsByClassName('cccombo');
 	[].forEach.call(cccomboArray, function(element) {
-		var cccombo = new Cccombo(element);
-		cccombo.init();
+		element.cccombo = new Cccombo(element);
+		element.cccombo.init();
 	});
 });
