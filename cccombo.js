@@ -132,9 +132,15 @@ CccomboList.prototype = {
 	},
 
 	hoveredItem: function() {
-		return this.items.filter(function(item) {
-			return item._isHovered();
-		})[0];
+		var found = null;
+		for (var i = 0; i < this.items.length; i++) {
+			var item = this.items[i];
+			if (item._isHovered()) {
+				found = item;
+				break;
+			}
+		}
+		return found;
 	},
 
 	hover: function(item) {
@@ -173,9 +179,15 @@ CccomboList.prototype = {
 	},
 
 	selectedItem: function() {
-		return this.items.filter(function(item) {
-			return item._isSelected();
-		})[0];
+		var found = null;
+		for (var i = 0; i < this.items.length; i++) {
+			var item = this.items[i];
+			if (item._isSelected()) {
+				found = item;
+				break;
+			}
+		}
+		return found;
 	},
 
 	selectItem: function(item) {
