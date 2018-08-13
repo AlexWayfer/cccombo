@@ -91,6 +91,18 @@ Group-header items become unselectable.
 </ul>
 ```
 
+### Default selected item
+
+Add `selected` class to the desired item:
+
+```html
+<ul>
+  <li>Now I'm not selected</li>
+  <li class="selected">I'll be selected!</li>
+  <li>Good luck another time</li>
+</ul>
+```
+
 ### Filter the list of items
 
 ```javascript
