@@ -121,3 +121,27 @@ depends on the type of Cccombo usage.
 
 Please note, that `change` event is not dispatched to the hidden `input`,
 added by Cccombo for `button` type of usage.
+
+### Programmatically select item
+
+Cccombo assign the `cccombo` property with a Cccombo-instance value
+to all initialized elements. So, you can call any Cccombo functions from
+this property.
+
+`select()` can receive a String argument (`value` of the desired item)
+or an instance of `CccomboItem`.
+
+```html
+<div id="cccombo" class="cccombo">
+  <button type="button"></button>
+  <ul>
+    <li data-value="USD">$</li>
+    <li data-value="EUR">€</li>
+    <li data-value="RUB">₽</li>
+  </ul>
+</div>
+```
+
+```javascript
+document.querySelector('#cccombo').cccombo.select('EUR');
+```

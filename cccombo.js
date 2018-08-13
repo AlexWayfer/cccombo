@@ -379,6 +379,16 @@ Cccombo.prototype = {
 	},
 
 	select: function(item) {
+		if (typeof item == 'string') {
+			var visibleItems = this.list.visibleItems();
+			for (var i = 0; i < visibleItems.length; i++) {
+				if (visibleItems[i].value == item) {
+					item = visibleItems[i];
+					break;
+				}
+			}
+		}
+
 		if (item === undefined) {
 			item = this.list.hoveredItem();
 		}
