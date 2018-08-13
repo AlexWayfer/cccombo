@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.4.1
+	Version: 1.5.0
 
 	https://github.com/AlexWayfer/cccombo
 */
