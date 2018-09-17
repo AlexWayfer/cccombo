@@ -4,8 +4,20 @@ Make select-box or combo-box by one module!
 
 ## Installation
 
-Just download `cccombo.js` and `cccombo.css` files
-and include in your application.
+Download `cccombo.js` and `cccombo.css` files,
+and include them into your application.
+
+Then initialize Cccombo like this:
+
+```javascript
+document.addEventListener('DOMContentLoaded', function() {
+	var cccomboArray = document.getElementsByClassName('cccombo');
+	[].forEach.call(cccomboArray, function(element) {
+		element.cccombo = new Cccombo(element);
+		element.cccombo.init();
+	});
+});
+```
 
 ## Usage
 

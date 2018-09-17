@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.5.0
+	Version: 1.6.0
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -416,11 +416,3 @@ Cccombo.prototype = {
 	}
 
 };
-
-document.addEventListener('DOMContentLoaded', function() {
-	var cccomboArray = document.getElementsByClassName('cccombo');
-	[].forEach.call(cccomboArray, function(element) {
-		element.cccombo = new Cccombo(element);
-		element.cccombo.init();
-	});
-});
