@@ -5,7 +5,7 @@
 
 	Author: Alexander Popov <alex.wayfer@gmail.com>
 	License: MIT
-	Version: 1.6.0
+	Version: 1.7.0
 
 	https://github.com/AlexWayfer/cccombo
 */
@@ -391,6 +391,11 @@ Cccombo.prototype = {
 
 		if (item === undefined) {
 			item = this.list.hoveredItem();
+		}
+
+		if (item === this.list.selectedItem()) {
+			this.close();
+			return;
 		}
 
 		this.list.selectItem(item);
