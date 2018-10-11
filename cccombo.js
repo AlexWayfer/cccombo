@@ -242,7 +242,7 @@ Cccombo.prototype = {
 		});
 
 		this.input_or_button.addEventListener('blur', function(event) {
-			if (cccombo.element.querySelector(':hover') !== cccombo.list.element) {
+			if (cccombo.element.querySelector('ul:hover') !== cccombo.list.element) {
 				cccombo.close();
 			}
 		});
