@@ -393,26 +393,28 @@ Cccombo.prototype = {
 			item = this.list.hoveredItem();
 		}
 
-		if (item === this.list.selectedItem()) {
-			this.close();
-			return;
-		}
+		var previous_selected_item = this.list.selectedItem();
 
 		this.list.selectItem(item);
 
 		this.input_or_button.value = item.value;
-		if (this.input) dispatchCustomEvent(this.input, 'input');
+
 		if (this.button) {
 			var label = (this.button.querySelector('*[data-label]') || this.button);
 			label.innerHTML = item.label;
 		}
-		dispatchCustomEvent(this.input_or_button, 'change');
 		// Hidden input has no value from button
 		// because disabled button doesn't recieve events (on Firefox)
 		// https://bugzilla.mozilla.org/show_bug.cgi?id=329509
 		if (this.button && this.button.getAttribute('disabled') !== undefined) {
 			this.buttonOnChange();
 		}
+
+		if (item !== previous_selected_item) {
+			if (this.input) dispatchCustomEvent(this.input, 'input');
+			dispatchCustomEvent(this.input_or_button, 'change');
+		}
+
 		this.close();
 	},
 
