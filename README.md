@@ -157,3 +157,29 @@ or an instance of `CccomboItem`.
 ```javascript
 document.querySelector('#cccombo').cccombo.select('EUR');
 ```
+
+### Multiple lists in drop-down menu
+
+```html
+<div class="cccombo">
+  <button type="button"></button>
+
+  <div class="dropdown">
+    <h4>List 1</h4>
+
+    <ul>
+      <li>The first option of the List 1</li>
+      <li>The second option of the List 1</li>
+      <li>The third option of the List 1</li>
+    </ul>
+
+    <h4>List 2</h4>
+
+    <ul>
+      <li>The first option of the List 2</li>
+      <li>The second option of the List 2</li>
+      <li>The third option of the List 2</li>
+    </ul>
+  </div>
+</div>
+```

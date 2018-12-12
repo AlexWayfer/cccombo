@@ -87,10 +87,10 @@ CccomboItem.prototype = {
 };
 
 // Cccombo List class
-function CccomboList(cccombo) {
+function CccomboList(cccombo, element) {
 	// Constructor
 	this.cccombo = cccombo;
-	this.element = this.cccombo.element.getElementsByTagName('ul')[0];
+	this.element = element;
 	var liArray = this.element.querySelectorAll('li:not(.group)');
 	this.items = [].map.call(liArray, function(item) {
 		return new CccomboItem(item);
@@ -106,7 +106,7 @@ CccomboList.prototype = {
 
 	hideItem: function(index) {
 		var item = this.items[index];
-		if (item._isHovered()) this.hover(null);
+		if (item._isHovered()) this._hover(null);
 		if (item._isSelected()) this.selectItem(null);
 		item._hide();
 	},
@@ -131,7 +131,7 @@ CccomboList.prototype = {
 		// }
 	},
 
-	hoveredItem: function() {
+	_hoveredItem: function() {
 		var found = null;
 		for (var i = 0; i < this.items.length; i++) {
 			var item = this.items[i];
@@ -143,15 +143,21 @@ CccomboList.prototype = {
 		return found;
 	},
 
-	hover: function(item) {
-		var hoveredItem = this.hoveredItem();
+	_hover: function(target_item) {
+		var hoveredItem = this._hoveredItem();
 		if (hoveredItem) hoveredItem._unhover();
-		if (item) item._hover();
+		if (target_item) {
+			this.items.forEach(function(item) {
+				if (item.value == target_item.value) {
+					item._hover();
+				}
+			});
+		}
 	},
 
-	hoverMove: function(delta) {
+	_hoverMove: function(delta) {
 		var visibleItems = this.visibleItems();
-		var index = visibleItems.indexOf(this.hoveredItem()) + delta;
+		var index = visibleItems.indexOf(this._hoveredItem()) + delta;
 		if (
 			(index >= visibleItems.length && delta == 1) ||
 			(index < 0 && delta != -1)
@@ -163,22 +169,10 @@ CccomboList.prototype = {
 		) {
 			index = visibleItems.length - 1;
 		}
-		this.hover(visibleItems[index]);
+		this._hover(visibleItems[index]);
 	},
 
-	hoverNext: function() {
-		this.hoverMove(+1);
-	},
-
-	hoverPrev: function() {
-		this.hoverMove(-1);
-	},
-
-	hoverFirst: function() {
-		this.hover(this.visibleItems()[0]);
-	},
-
-	selectedItem: function() {
+	_selectedItem: function() {
 		var found = null;
 		for (var i = 0; i < this.items.length; i++) {
 			var item = this.items[i];
@@ -191,25 +185,73 @@ CccomboList.prototype = {
 	},
 
 	selectItem: function(item) {
-		var selectedItem = this.selectedItem();
-		if (selectedItem) selectedItem._unselect();
+		var selectedItem = this._selectedItem();
+		if (selectedItem) {
+			if (item && selectedItem.value == item.value) return;
+			selectedItem._unselect();
+		}
 		if (item) item._select();
+	},
+
+	isMain: function() {
+		return this.element.dataset.main == 'true';
 	}
 };
 
 // Cccombo class
 function Cccombo(element) {
+	var cccombo = this;
+
 	// Constructor
 	this.element = element;
 	this.input =
 		this.element.querySelector('.cccombo > input:not([type="hidden"])');
 	this.button = this.element.querySelector('button');
 	this.input_or_button = (this.input || this.button);
-	this.list = new CccomboList(this);
+	this.lists = [].map.call(
+		this.element.querySelectorAll('ul'), function(list_element) {
+			return new CccomboList(cccombo, list_element);
+		}
+	);
+	var main_lists = this.lists.filter(function(list) {
+		return list.isMain();
+	});
+	if (main_lists.length > 1) {
+		console.error('There are more than 1 main list for Cccombo:');
+		console.error(main_lists);
+	}
+	this.main_list = (main_lists.length > 0 ? main_lists : this.lists)[0];
+	this.dropdown =
+		this.element.querySelector('.cccombo > ul, .cccombo > .dropdown');
 }
 
 Cccombo.prototype = {
 	openClass: 'open',
+
+	hoveredItems: function() {
+		this.lists.map(function(list) {
+			return list._hoveredItem();
+		});
+	},
+
+	selectedItem: function() {
+		return this.main_list._selectedItem();
+	},
+
+	hover: function(item) {
+		this.lists.forEach(function(list) {
+			list._hover(item);
+		});
+	},
+
+	hoverMove: function(delta) {
+		this.main_list._hoverMove(delta);
+		this.hover(this.main_list._hoveredItem());
+	},
+
+	hoverFirst: function() {
+		this.hover(this.main_list.visibleItems()[0]);
+	},
 
 	init: function() {
 		var cccombo = this;
@@ -228,7 +270,9 @@ Cccombo.prototype = {
 				cccombo.buttonOnChange();
 			});
 			// Append node
-			this.element.insertBefore(this.hidden_input, this.list.element);
+			this.element.insertBefore(
+				this.hidden_input, this.button.nextSibling
+			);
 		}
 
 		// Open and close by focus
@@ -242,42 +286,47 @@ Cccombo.prototype = {
 		});
 
 		this.input_or_button.addEventListener('blur', function(event) {
-			if (cccombo.element.querySelector('ul:hover') !== cccombo.list.element) {
+			if (!cccombo.element.querySelector('ul:hover')) {
 				cccombo.close();
 			}
 		});
 
-		this.list.items.forEach(function(item) {
-			// Hover item event
-			item.element.addEventListener('mouseenter', function(event) {
-				cccombo.list.hover(item);
-			});
-			item.element.addEventListener('mouseleave', function(event) {
-				cccombo.list.hover(null);
-			});
+		this.lists.forEach(function(list) {
+			list.items.forEach(function(item) {
+				// Hover item event
+				item.element.addEventListener('mouseenter', function(event) {
+					cccombo.hover(item);
+				});
+				item.element.addEventListener('mouseleave', function(event) {
+					cccombo.hover(null);
+				});
 
-			// Select item event
-			item.element.addEventListener('click', function(event) {
-				cccombo.select(item);
-				if (cccombo.button) cccombo.button.focus();
-			});
+				// Select item event
+				item.element.addEventListener('click', function(event) {
+					cccombo.select(item);
+					if (cccombo.button) cccombo.button.focus();
+				});
 
-			// Select selected item
-			if (item._isSelected()) cccombo.select(item);
+				// Select selected item
+				if (item._isSelected()) cccombo.select(item);
+			});
 		});
 
 		// Filtering items on input
 		if (this.input) this.input.addEventListener('input', function(event) {
+			var value = this.value;
 			// Hide items
-			var input_value = this.value.toLowerCase();
-			cccombo.list.filterItems(function(item) {
-				var item_value = item.element.innerHTML.toLowerCase();
-				return (item_value.indexOf(input_value) >= 0);
+			var input_value = value.toLowerCase();
+			cccombo.lists.forEach(function(list) {
+				list.filterItems(function(item) {
+					var item_value = item.element.innerHTML.toLowerCase();
+					return (item_value.indexOf(input_value) >= 0);
+				});
+				var selectedItem = list._selectedItem();
+				if (selectedItem && selectedItem.value != value) {
+					selectedItem._unselect();
+				}
 			});
-			var selectedItem = cccombo.list.selectedItem();
-			if (selectedItem && selectedItem.value != this.value) {
-				selectedItem._unselect();
-			}
 		});
 
 		// Moving for items
@@ -290,16 +339,16 @@ Cccombo.prototype = {
 			if (cccombo.isOpen()) {
 				switch (event.keyCode) {
 					case arrow.up:
-						cccombo.list.hoverPrev();
+						cccombo.hoverMove(-1);
 						break;
 					case arrow.down:
-						cccombo.list.hoverNext();
+						cccombo.hoverMove(+1);
 						break;
 					case page.up:
-						cccombo.list.hoverMove(-5);
+						cccombo.hoverMove(-5);
 						break;
 					case page.down:
-						cccombo.list.hoverMove(5);
+						cccombo.hoverMove(5);
 						break;
 					case escape:
 						cccombo.close();
@@ -348,22 +397,42 @@ Cccombo.prototype = {
 	},
 
 	open: function() {
-		if (this.list.visibleItems().length === 0) {
+		if (
+			this.lists.every(function(list) {
+				return list.visibleItems().length === 0;
+			})
+		) {
 			this.close();
 			return false;
 		}
-		this.element.classList.add(this.openClass);
-		var selectedItem = this.list.selectedItem();
-		if (!selectedItem) {
-			this.list.hoverFirst();
+
+		if (!this.dropdown.style.bottom) {
+			this.dropdown.style.visibility = 'hidden';
+			this.element.classList.add(this.openClass);
+
+			if (
+				this.dropdown.getBoundingClientRect().bottom >
+					document.body.getBoundingClientRect().bottom
+			) {
+				this.dropdown.style.bottom = '100%';
+			}
+
+			this.dropdown.style.visibility = '';
 		} else {
-			this.list.hover(selectedItem);
+			this.element.classList.add(this.openClass);
+		}
+
+		var selectedItem = this.selectedItem();
+		if (!selectedItem) {
+			this.hoverFirst();
+		} else {
+			this.hover(selectedItem);
 		}
 	},
 
 	close: function() {
 		this.element.classList.remove(this.openClass);
-		this.list.hover(null);
+		this.hover(null);
 	},
 
 	isOpen: function() {
@@ -379,23 +448,27 @@ Cccombo.prototype = {
 	},
 
 	select: function(item) {
-		if (typeof item == 'string') {
-			var visibleItems = this.list.visibleItems();
-			for (var i = 0; i < visibleItems.length; i++) {
-				if (visibleItems[i].value == item) {
-					item = visibleItems[i];
-					break;
+		var original_item_value = typeof item == 'string' ? item : item.value,
+		    previous_selected_item = this.selectedItem();
+
+		this.lists.forEach(function(list) {
+			var list_item = null;
+
+			var visibleItems = list.visibleItems();
+			visibleItems.some(function(visibleItem) {
+				if (visibleItem.value == original_item_value) {
+					return item = list_item = visibleItem;
+				} else {
+					return;
 				}
-			}
+			});
+
+			list.selectItem(list_item);
+		});
+
+		if (item == undefined) {
+			item = this.hoveredItems()[0];
 		}
-
-		if (item === undefined) {
-			item = this.list.hoveredItem();
-		}
-
-		var previous_selected_item = this.list.selectedItem();
-
-		this.list.selectItem(item);
 
 		this.input_or_button.value = item.value;
 
@@ -410,16 +483,13 @@ Cccombo.prototype = {
 			this.buttonOnChange();
 		}
 
-		if (item !== previous_selected_item) {
+		if (
+			!(previous_selected_item && item.value == previous_selected_item.value)
+		) {
 			if (this.input) dispatchCustomEvent(this.input, 'input');
 			dispatchCustomEvent(this.input_or_button, 'change');
 		}
 
 		this.close();
-	},
-
-	selectFirst: function() {
-		this.select(this.list.visibleItems()[0]);
 	}
-
 };
