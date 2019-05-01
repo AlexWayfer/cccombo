@@ -332,10 +332,11 @@ Cccombo.prototype = {
 		// Moving for items
 		this.input_or_button.addEventListener('keydown', function(event) {
 			// console.log(event.keyCode);
-			var arrow  = { up: 38, down: 40 },
-			    page   = { up: 33, down: 34 },
-			    escape =   27,
-			    enter  =   13;
+			var
+				arrow  = { up: 38, down: 40 },
+				page   = { up: 33, down: 34 },
+				escape =   27,
+				enter  =   13;
 			if (cccombo.isOpen()) {
 				switch (event.keyCode) {
 					case arrow.up:
@@ -448,8 +449,9 @@ Cccombo.prototype = {
 	},
 
 	select: function(item) {
-		var original_item_value = typeof item == 'string' ? item : item.value,
-		    previous_selected_item = this.selectedItem();
+		var
+			original_item_value = typeof item == 'string' ? item : item.value,
+			previous_selected_item = this.selectedItem();
 
 		this.lists.forEach(function(list) {
 			var list_item = null;
