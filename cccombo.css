@@ -91,6 +91,10 @@
 	background: rgba(0, 0, 0, 0.1);
 }
 
+.cccombo ul > li.hidden {
+	display: none;
+}
+
 .cccombo ul > li.group {
 	margin-top: 0.5em;
 	padding: 0.5em 1em;
