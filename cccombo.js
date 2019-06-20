@@ -291,27 +291,6 @@ Cccombo.prototype = {
 			}
 		});
 
-		this.lists.forEach(function(list) {
-			list.items.forEach(function(item) {
-				// Hover item event
-				item.element.addEventListener('mouseenter', function(event) {
-					cccombo.hover(item);
-				});
-				item.element.addEventListener('mouseleave', function(event) {
-					cccombo.hover(null);
-				});
-
-				// Select item event
-				item.element.addEventListener('click', function(event) {
-					cccombo.select(item);
-					if (cccombo.button) cccombo.button.focus();
-				});
-
-				// Select selected item
-				if (item._isSelected()) cccombo.select(item);
-			});
-		});
-
 		// Filtering items on input
 		if (this.input) this.input.addEventListener('input', function(event) {
 			var value = this.value;
@@ -375,6 +354,30 @@ Cccombo.prototype = {
 			}
 
 			event.preventDefault();
+		});
+
+		this.lists.forEach(function(list) {
+			list.items.forEach(function(item) {
+				// Hover item event
+				item.element.addEventListener('mouseenter', function(event) {
+					cccombo.hover(item);
+				});
+				item.element.addEventListener('mouseleave', function(event) {
+					cccombo.hover(null);
+				});
+
+				// Select item event
+				item.element.addEventListener('click', function(event) {
+					cccombo.select(item);
+					if (cccombo.button) cccombo.button.focus();
+				});
+
+				// Select selected item
+				if (item._isSelected()) {
+					item._unselect();
+					cccombo.select(item);
+				}
+			});
 		});
 
 		// window.addEventListener('resize', function(event) {
@@ -485,9 +488,7 @@ Cccombo.prototype = {
 			this.buttonOnChange();
 		}
 
-		if (
-			!(previous_selected_item && item.value == previous_selected_item.value)
-		) {
+		if (!previous_selected_item || item.value != previous_selected_item.value) {
 			if (this.input) dispatchCustomEvent(this.input, 'input');
 			dispatchCustomEvent(this.input_or_button, 'change');
 		}
