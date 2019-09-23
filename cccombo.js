@@ -410,21 +410,22 @@ Cccombo.prototype = {
 			return false;
 		}
 
-		if (!this.dropdown.style.bottom) {
-			this.dropdown.style.visibility = 'hidden';
-			this.element.classList.add(this.openClass);
+		this.dropdown.style.visibility = 'hidden';
+		this.element.classList.add(this.openClass);
 
-			if (
-				this.dropdown.getBoundingClientRect().bottom >
-					document.body.getBoundingClientRect().bottom
-			) {
-				this.dropdown.style.bottom = '100%';
-			}
+		var
+			dropdown_bounding = this.dropdown.getBoundingClientRect(),
+			body_bounding = document.body.getBoundingClientRect();
 
-			this.dropdown.style.visibility = '';
-		} else {
-			this.element.classList.add(this.openClass);
+		if (dropdown_bounding.bottom > body_bounding.bottom) {
+			this.dropdown.style.bottom = '100%';
 		}
+
+		if (dropdown_bounding.right > body_bounding.right) {
+			this.dropdown.style.right = '0';
+		}
+
+		this.dropdown.style.visibility = '';
 
 		var selectedItem = this.selectedItem();
 		if (!selectedItem) {
@@ -437,6 +438,8 @@ Cccombo.prototype = {
 	close: function() {
 		this.element.classList.remove(this.openClass);
 		this.hover(null);
+		this.dropdown.style.bottom = '';
+		this.dropdown.style.right = '';
 	},
 
 	isOpen: function() {
