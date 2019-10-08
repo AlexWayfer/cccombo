@@ -225,6 +225,10 @@ function Cccombo(element) {
 		this.element.querySelector('.cccombo > ul, .cccombo > .dropdown');
 }
 
+Cccombo.container = function() {
+	return document.body;
+};
+
 Cccombo.prototype = {
 	openClass: 'open',
 
@@ -415,14 +419,23 @@ Cccombo.prototype = {
 
 		var
 			dropdown_bounding = this.dropdown.getBoundingClientRect(),
+			container = Cccombo.container(this.element),
+			container_bounding = container.getBoundingClientRect(),
 			body_bounding = document.body.getBoundingClientRect();
 
 		if (dropdown_bounding.bottom > body_bounding.bottom) {
 			this.dropdown.style.bottom = '100%';
 		}
 
-		if (dropdown_bounding.right > body_bounding.right) {
-			this.dropdown.style.right = '0';
+		if (dropdown_bounding.right > container_bounding.right) {
+			this.dropdown.style.left =
+				'calc(' +
+					window.getComputedStyle(this.dropdown).left +
+					' - ' +
+					window.getComputedStyle(container).paddingRight +
+					' + ' +
+					(container_bounding.right - dropdown_bounding.right + 'px') +
+				')';
 		}
 
 		this.dropdown.style.visibility = '';
@@ -439,7 +452,7 @@ Cccombo.prototype = {
 		this.element.classList.remove(this.openClass);
 		this.hover(null);
 		this.dropdown.style.bottom = '';
-		this.dropdown.style.right = '';
+		this.dropdown.style.left = '';
 	},
 
 	isOpen: function() {
